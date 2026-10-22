@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="policy_all_internal" model="mfa.guard.policy">
+        <field name="name">All internal users</field>
+        <field name="scope">internal</field>
+        <field name="sequence">10</field>
+        <field name="note">Default policy. Nothing is enforced until you set "2FA Enforcement" to Enabled in Settings > 2FA Shield.</field>
+    </record>
+</odoo>

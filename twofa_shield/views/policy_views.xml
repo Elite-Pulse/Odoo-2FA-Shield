@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mfa_guard_policy_view_list" model="ir.ui.view">
+        <field name="name">mfa.guard.policy.list</field>
+        <field name="model">mfa.guard.policy</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="scope"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="mfa_guard_policy_view_form" model="ir.ui.view">
+        <field name="name">mfa.guard.policy.form</field>
+        <field name="model">mfa.guard.policy</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_users" type="object" class="oe_stat_button"
+                                icon="fa-users" string="Targeted users" invisible="not id"/>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Finance team"/></h1>
+                    </div>
+                    <group>
+                        <group string="Who must use 2FA">
+                            <field name="scope"/>
+                            <field name="group_ids" widget="many2many_tags"
+                                   invisible="scope != 'groups'" required="scope == 'groups'"/>
+                            <field name="user_ids" widget="many2many_tags"
+                                   invisible="scope != 'users'" required="scope == 'users'"/>
+                            <field name="company_ids" widget="many2many_tags"
+                                   invisible="scope != 'companies'" required="scope == 'companies'"/>
+                        </group>
+                        <group string="Options">
+                            <field name="active"/>
+                            <field name="sequence"/>
+                            <field name="exempt_user_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <field name="note" placeholder="Internal note..."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="mfa_guard_policy_action" model="ir.actions.act_window">
+        <field name="name">Enforcement Policies</field>
+        <field name="res_model">mfa.guard.policy</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first 2FA policy</p>
+            <p>A user must use 2FA as soon as one active policy targets him.</p>
+        </field>
+    </record>
+</odoo>
