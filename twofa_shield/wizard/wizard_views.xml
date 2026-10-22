@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mfa_guard_invite_wizard_form" model="ir.ui.view">
+        <field name="name">mfa.guard.invite.wizard.form</field>
+        <field name="model">mfa.guard.invite.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Send 2FA invitation">
+                <div class="alert alert-warning" role="alert" invisible="not mode_off">
+                    2FA enforcement is currently <strong>disabled</strong> in Settings. Users will only
+                    be prompted once you enable it.
+                </div>
+                <field name="mode_off" invisible="1"/>
+                <group>
+                    <group>
+                        <field name="target" widget="radio"/>
+                        <field name="user_ids" widget="many2many_tags" invisible="target != 'selected'"
+                               options="{'no_create': True}"/>
+                        <field name="user_count"/>
+                    </group>
+                    <group>
+                        <field name="only_pending"/>
+                        <field name="force"/>
+                        <field name="deadline_days"/>
+                        <field name="send_email"/>
+                    </group>
+                </group>
+                <field name="message" placeholder="Optional personal message added to the e-mail..."
+                       invisible="not send_email"/>
+                <footer>
+                    <button name="action_send" type="object" string="Apply" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="mfa_guard_invite_wizard_action" model="ir.actions.act_window">
+        <field name="name">Send 2FA invitation</field>
+        <field name="res_model">mfa.guard.invite.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="base.model_res_users"/>
+        <field name="binding_view_types">list</field>
+    </record>
+
+    <record id="mfa_guard_reset_wizard_form" model="ir.ui.view">
+        <field name="name">mfa.guard.reset.wizard.form</field>
+        <field name="model">mfa.guard.reset.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Reset / Recovery">
+                <div class="alert alert-info" role="alert">
+                    Lost phone or lost SSO account? Reset the 2FA, open a short emergency window, or
+                    give the user a local password.
+                </div>
+                <group>
+                    <field name="user_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                </group>
+                <group>
+                    <group string="2FA">
+                        <field name="reset_totp"/>
+                        <field name="bypass_hours"/>
+                        <field name="exempt"/>
+                    </group>
+                    <group string="Account access">
+                        <field name="send_password_reset"/>
+                        <field name="notify_user"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_apply" type="object" string="Apply" class="btn-primary" data-hotkey="q"
+                            confirm="Apply these changes to the selected users?"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="mfa_guard_reset_wizard_action" model="ir.actions.act_window">
+        <field name="name">Reset 2FA / Recovery</field>
+        <field name="res_model">mfa.guard.reset.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="base.model_res_users"/>
+        <field name="binding_view_types">list</field>
+    </record>
+</odoo>

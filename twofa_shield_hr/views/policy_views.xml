@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mfa_guard_policy_view_form_hr" model="ir.ui.view">
+        <field name="name">mfa.guard.policy.form.hr</field>
+        <field name="model">mfa.guard.policy</field>
+        <field name="inherit_id" ref="twofa_shield.mfa_guard_policy_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_ids']" position="after">
+                <field name="department_ids" widget="many2many_tags"
+                       invisible="scope != 'departments'" required="scope == 'departments'"/>
+                <field name="include_subdepartments" invisible="scope != 'departments'"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
