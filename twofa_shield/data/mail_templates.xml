@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="mail_template_invite" model="mail.template">
+        <field name="name">2FA Shield: 2FA invitation</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="subject">Action required: enable two-factor authentication ({{ object.company_id.name }})</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted or '') }}</field>
+        <field name="email_to">{{ object.email_formatted }}</field>
+        <field name="lang">{{ object.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+<div style="margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#333333;">
+    <p>Hello <t t-out="object.name or ''"/>,</p>
+    <p>To keep your <t t-out="object.company_id.name or 'company'"/> account and our data safe, <strong>two-factor authentication (2FA)</strong> is required for your account.</p>
+    <t t-if="ctx.get('mfa_deadline')">
+        <p>Please complete the setup <strong>before <t t-out="ctx.get('mfa_deadline')"/></strong>.</p>
+    </t>
+    <t t-if="ctx.get('mfa_message')">
+        <blockquote style="margin:12px 0;padding:8px 14px;border-left:4px solid #017e84;background:#f4f6f8;">
+            <t t-out="ctx.get('mfa_message')"/>
+        </blockquote>
+    </t>
+    <p>It takes about one minute:</p>
+    <ol>
+        <li>Install an authenticator app on your phone (Microsoft Authenticator, Google Authenticator, Authy, 1Password, Bitwarden...).</li>
+        <li>Sign in as usual. A page with a QR code appears.</li>
+        <li>Scan the QR code, type the 6-digit code, and save the recovery codes shown to you.</li>
+    </ol>
+    <p style="text-align:center;margin:26px 0;">
+        <a t-att-href="'%s/web/login' % ctx.get('mfa_base_url', '')" style="background:#017e84;color:#ffffff;text-decoration:none;padding:11px 24px;border-radius:5px;font-weight:bold;">Sign in and set up 2FA</a>
+    </p>
+    <p style="color:#777777;font-size:12px;">If you lose your phone, ask your administrator to reset your 2FA. Never share a verification code with anybody.</p>
+</div>
+        </field>
+    </record>
+
+    <record id="mail_template_reminder" model="mail.template">
+        <field name="name">2FA Shield: 2FA reminder</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="subject">Reminder: set up two-factor authentication ({{ object.company_id.name }})</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted or '') }}</field>
+        <field name="email_to">{{ object.email_formatted }}</field>
+        <field name="lang">{{ object.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+<div style="margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#333333;">
+    <p>Hello <t t-out="object.name or ''"/>,</p>
+    <p>This is a friendly reminder: two-factor authentication is mandatory for your account and is not set up yet.</p>
+    <t t-if="ctx.get('mfa_deadline')">
+        <p>Deadline: <strong><t t-out="ctx.get('mfa_deadline')"/></strong>. After this date you will not be able to postpone it any more.</p>
+    </t>
+    <p style="text-align:center;margin:26px 0;">
+        <a t-att-href="'%s/web/login' % ctx.get('mfa_base_url', '')" style="background:#017e84;color:#ffffff;text-decoration:none;padding:11px 24px;border-radius:5px;font-weight:bold;">Set up 2FA now</a>
+    </p>
+</div>
+        </field>
+    </record>
+
+    <record id="mail_template_notice" model="mail.template">
+        <field name="name">2FA Shield: security notice</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="subject">Security notice: {{ ctx.get('mfa_title') or 'two-factor authentication' }}</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted or '') }}</field>
+        <field name="email_to">{{ object.email_formatted }}</field>
+        <field name="lang">{{ object.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+<div style="margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#333333;">
+    <p>Hello <t t-out="object.name or ''"/>,</p>
+    <p><t t-out="ctx.get('mfa_text') or ''"/></p>
+    <p style="color:#777777;font-size:12px;">This is an automatic security message from <t t-out="object.company_id.name or ''"/>.</p>
+</div>
+        </field>
+    </record>
+</odoo>

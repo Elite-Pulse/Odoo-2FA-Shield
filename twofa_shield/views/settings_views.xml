@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_mfa_guard" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.mfa.guard</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="95"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="2FA Shield" string="2FA Shield" name="twofa_shield" groups="base.group_system">
+                    <block title="Enforcement" name="mfa_guard_enforcement">
+                        <setting id="mfa_guard_mode_setting" string="2FA enforcement"
+                                 help="Switch the module on or off at any time, without uninstalling. When disabled, Odoo behaves like standard (users who enabled 2FA themselves are still asked for their code).">
+                            <field name="mfa_guard_mode" class="w-75"/>
+                            <div class="mt-2">
+                                <button name="%(twofa_shield.mfa_guard_policy_action)d" type="action"
+                                        string="Manage policies" class="btn-link" icon="oi-arrow-right"/>
+                            </div>
+                        </setting>
+                        <setting id="mfa_guard_grace_setting" string="Grace period"
+                                 help="Let users postpone the enrolment for a few days. 0 = enrol at the very next sign-in.">
+                            <field name="mfa_guard_grace_days"/>
+                        </setting>
+                        <setting id="mfa_guard_sso_setting" string="Trust single sign-on"
+                                 help="Skip the Odoo code for users who signed in with Microsoft Azure / Google / any OAuth provider (their provider already did MFA). Leave unchecked to require both.">
+                            <field name="mfa_guard_trust_sso"/>
+                        </setting>
+                    </block>
+                    <block title="Security options" name="mfa_guard_security">
+                        <setting id="mfa_guard_remember_setting" string="Remember this device"
+                                 help="Standard Odoo lets users skip the code for 30 days on a browser. Keep it off for maximum security.">
+                            <field name="mfa_guard_allow_remember"/>
+                        </setting>
+                        <setting id="mfa_guard_recovery_setting" string="Disable recovery codes"
+                                 help="Recovery codes let a user sign in once if the phone is lost. Disable them if you prefer admin-only recovery.">
+                            <field name="mfa_guard_no_recovery"/>
+                        </setting>
+                        <setting id="mfa_guard_issuer_setting" string="Authenticator app label"
+                                 help="Name displayed next to the account in the authenticator app. Defaults to the company name.">
+                            <field name="mfa_guard_issuer" placeholder="e.g. ACME ERP"/>
+                        </setting>
+                    </block>
+                    <block title="Notifications and audit" name="mfa_guard_notifications">
+                        <setting id="mfa_guard_notice_setting" string="Security e-mails"
+                                 help="E-mail users when their 2FA is enabled or reset by an administrator.">
+                            <field name="mfa_guard_no_notice"/>
+                        </setting>
+                        <setting id="mfa_guard_reminder_setting" string="Automatic reminders"
+                                 help="A daily job reminds users who must enable 2FA but did not.">
+                            <field name="mfa_guard_no_reminders"/>
+                            <div class="mt-2" invisible="mfa_guard_no_reminders">
+                                <span class="me-2">Every</span>
+                                <field name="mfa_guard_reminder_days" class="oe_inline" style="width: 4em;"/>
+                                <span class="ms-2">days</span>
+                            </div>
+                        </setting>
+                        <setting id="mfa_guard_log_setting" string="Audit log retention" help="Days to keep audit events.">
+                            <field name="mfa_guard_log_retention"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mfa_guard_settings_action" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module': 'twofa_shield', 'bin_size': False}</field>
+    </record>
+</odoo>

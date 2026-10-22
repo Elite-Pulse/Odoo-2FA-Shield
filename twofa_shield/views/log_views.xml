@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mfa_guard_log_view_list" model="ir.ui.view">
+        <field name="name">mfa.guard.log.list</field>
+        <field name="model">mfa.guard.log</field>
+        <field name="arch" type="xml">
+            <tree create="false" edit="false" delete="false">
+                <field name="create_date" string="Date"/>
+                <field name="login"/>
+                <field name="event"/>
+                <field name="detail"/>
+                <field name="actor_id"/>
+                <field name="ip"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="mfa_guard_log_view_search" model="ir.ui.view">
+        <field name="name">mfa.guard.log.search</field>
+        <field name="model">mfa.guard.log</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="login"/>
+                <field name="event"/>
+                <field name="ip"/>
+                <filter name="f_today" string="Today"
+                        domain="[('create_date', '&gt;=', (context_today()).strftime('%Y-%m-%d'))]"/>
+                <group expand="0" string="Group By">
+                    <filter name="g_event" string="Event" context="{'group_by': 'event'}"/>
+                    <filter name="g_login" string="User" context="{'group_by': 'login'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="mfa_guard_log_action" model="ir.actions.act_window">
+        <field name="name">Audit Log</field>
+        <field name="res_model">mfa.guard.log</field>
+        <field name="view_mode">tree</field>
+    </record>
+</odoo>

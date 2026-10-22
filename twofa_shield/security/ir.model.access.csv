@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mfa_guard_policy_system,mfa.guard.policy system,model_mfa_guard_policy,base.group_system,1,1,1,1
+access_mfa_guard_log_system,mfa.guard.log system,model_mfa_guard_log,base.group_system,1,0,0,0
+access_mfa_guard_recovery_system,mfa.guard.recovery.code none,model_mfa_guard_recovery_code,base.group_system,0,0,0,0
+access_mfa_guard_invite_wizard,mfa.guard.invite.wizard,model_mfa_guard_invite_wizard,base.group_system,1,1,1,1
+access_mfa_guard_reset_wizard,mfa.guard.reset.wizard,model_mfa_guard_reset_wizard,base.group_system,1,1,1,1
