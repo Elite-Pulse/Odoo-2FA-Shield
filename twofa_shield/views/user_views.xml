@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tab on the standard user form (administrators only) -->
+    <record id="view_users_form_mfa_guard" model="ir.ui.view">
+        <field name="name">res.users.form.mfa.guard</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="2FA / MFA" name="twofa_shield_tab" groups="base.group_system">
+                    <group>
+                        <group string="Status">
+                            <field name="mfa_guard_status"/>
+                            <field name="totp_enabled"/>
+                            <field name="mfa_guard_enrolled_on"/>
+                            <field name="mfa_guard_recovery_count"/>
+                        </group>
+                        <group string="Control">
+                            <field name="mfa_guard_override"/>
+                            <field name="mfa_guard_bypass_until"/>
+                            <field name="mfa_guard_deadline"/>
+                        </group>
+                    </group>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button name="action_mfa_guard_open_reset" type="object"
+                                string="Reset / Recovery..." class="btn-primary" invisible="not id"/>
+                        <button name="action_mfa_guard_open_invite" type="object"
+                                string="Send 2FA invitation..." class="btn-secondary" invisible="not id"/>
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Overview list -->
+    <record id="view_users_mfa_list" model="ir.ui.view">
+        <field name="name">res.users.mfa.guard.list</field>
+        <field name="model">res.users</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <list string="2FA overview" create="false" import="false"
+                  decoration-danger="mfa_guard_status == 'pending'"
+                  decoration-success="mfa_guard_status == 'enabled'"
+                  decoration-muted="mfa_guard_status == 'exempt'">
+                <field name="name"/>
+                <field name="login"/>
+                <field name="company_id" optional="hide"/>
+                <field name="share" string="Portal" optional="hide"/>
+                <field name="mfa_guard_status"/>
+                <field name="mfa_guard_override" optional="show"/>
+                <field name="mfa_guard_enrolled_on" optional="show"/>
+                <field name="mfa_guard_deadline" optional="hide"/>
+                <field name="login_date" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_users_mfa_search" model="ir.ui.view">
+        <field name="name">res.users.mfa.guard.search</field>
+        <field name="model">res.users</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" filter_domain="['|', ('name', 'ilike', self), ('login', 'ilike', self)]" string="User"/>
+                <filter name="f_enabled" string="2FA active" domain="[('mfa_guard_status', '=', 'enabled')]"/>
+                <filter name="f_pending" string="Required, not enrolled" domain="[('mfa_guard_status', '=', 'pending')]"/>
+                <filter name="f_optional" string="Not required, not enrolled" domain="[('mfa_guard_status', '=', 'optional')]"/>
+                <filter name="f_exempt" string="Exempt / bypass" domain="[('mfa_guard_status', '=', 'exempt')]"/>
+                <separator/>
+                <filter name="f_internal" string="Internal" domain="[('share', '=', False)]"/>
+                <filter name="f_portal" string="Portal" domain="[('share', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="g_override" string="Override" context="{'group_by': 'mfa_guard_override'}"/>
+                    <filter name="g_company" string="Company" context="{'group_by': 'company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="mfa_guard_users_action" model="ir.actions.act_window">
+        <field name="name">2FA Overview</field>
+        <field name="res_model">res.users</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('view_users_mfa_list')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('base.view_users_form')})]"/>
+        <field name="search_view_id" ref="view_users_mfa_search"/>
+    </record>
+</odoo>

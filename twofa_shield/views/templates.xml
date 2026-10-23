@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Shared look (inline so it works on every Odoo series, mobile friendly) -->
+    <template id="mfg_style" name="2FA Shield style">
+        <style>
+            .mfg { font-size: .95rem; }
+            .mfg h4 { text-align: center; margin: 1rem 0 .25rem; }
+            .mfg .mfg-sub { text-align: center; color: #6c757d; font-size: .85rem; margin-bottom: 1rem; }
+            .mfg-qr { display: block; margin: .5rem auto; width: 100%; max-width: 230px; height: auto;
+                      image-rendering: pixelated; border: 1px solid #dee2e6; border-radius: .5rem; background: #fff; }
+            .mfg-secret { display: block; word-break: break-all; font-family: monospace; font-size: 1rem;
+                          letter-spacing: .05em; background: #fff; border: 1px solid #dee2e6;
+                          border-radius: .35rem; padding: .5rem; text-align: center; user-select: all; }
+            .mfg-steps { padding-left: 1.2rem; margin: .5rem 0 1rem; color: #495057; font-size: .85rem; }
+            .mfg-code-input { text-align: center; font-size: 1.4rem; letter-spacing: .3em; }
+            .mfg-codes { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; list-style: none; padding: 0; margin: .75rem 0; }
+            .mfg-codes li { font-family: monospace; background: #fff; border: 1px dashed #adb5bd;
+                            border-radius: .3rem; padding: .3rem .4rem; text-align: center; font-size: .9rem; }
+            .mfg-badge { display: inline-block; padding: .15rem .6rem; border-radius: 1rem; font-size: .8rem; font-weight: 600; }
+            .mfg-ok { background: #d1e7dd; color: #0f5132; }
+            .mfg-warn { background: #fff3cd; color: #664d03; }
+            .mfg-off { background: #e2e3e5; color: #41464b; }
+            @media print { .mfg-noprint { display: none !important; } }
+        </style>
+    </template>
+
+    <template id="setup_page" name="2FA Shield setup">
+        <t t-call="web.login_layout">
+            <t t-call="twofa_shield.mfg_style"/>
+            <div class="mfg">
+                <h4>Set up two-factor authentication</h4>
+                <p class="mfg-sub">Signed in as <strong t-out="login"/></p>
+                <ol class="mfg-steps">
+                    <li>Install an authenticator app (Microsoft Authenticator, Google Authenticator, Authy, 1Password...).</li>
+                    <li>Scan the QR code below.</li>
+                    <li>Type the 6-digit code shown by the app.</li>
+                </ol>
+                <img class="mfg-qr" t-att-src="'data:image/png;base64,%s' % qr" alt="QR code"/>
+                <details class="my-2 small">
+                    <summary class="text-center text-muted" style="cursor:pointer;">Cannot scan? Enter the key manually</summary>
+                    <code class="mfg-secret mt-2" t-out="formatted_secret"/>
+                    <div class="text-center text-muted mt-1">Account: <span t-out="issuer"/> / <span t-out="login"/> - Time based</div>
+                </details>
+                <div t-if="error" class="alert alert-danger py-2 small" role="alert" t-out="error"/>
+                <form method="post" action="/twofa_shield/setup" class="mt-3">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <input type="hidden" name="redirect" t-att-value="redirect"/>
+                    <input type="text" name="totp_code" class="form-control form-control-lg mfg-code-input"
+                           inputmode="numeric" autocomplete="one-time-code" pattern="[0-9 ]*"
+                           maxlength="10" placeholder="000 000" required="required" autofocus="autofocus"/>
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Activate two-factor authentication</button>
+                </form>
+                <form t-if="can_skip" method="post" action="/twofa_shield/skip" class="mt-2">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <input type="hidden" name="redirect" t-att-value="redirect"/>
+                    <button type="submit" class="btn btn-link w-100 text-muted">
+                        Remind me later<t t-if="deadline"> (mandatory from <t t-out="deadline"/>)</t>
+                    </button>
+                </form>
+                <div t-if="partial" class="text-center mt-2">
+                    <a href="/web/session/logout?redirect=/web/login" class="small text-muted">Cancel and sign out</a>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="codes_page" name="2FA Shield recovery codes">
+        <t t-call="web.login_layout">
+            <t t-call="twofa_shield.mfg_style"/>
+            <div class="mfg">
+                <h4>Two-factor authentication is active</h4>
+                <p class="mfg-sub">Save your recovery codes now</p>
+                <div class="alert alert-warning py-2 small">
+                    If you lose your phone, each of these codes lets you sign in <strong>once</strong>.
+                    They will <strong>not be shown again</strong>. Store them in a password manager or print them.
+                </div>
+                <ul class="mfg-codes">
+                    <li t-foreach="codes" t-as="code"><t t-out="code"/></li>
+                </ul>
+                <div class="d-flex gap-2 mfg-noprint">
+                    <a class="btn btn-outline-secondary flex-fill" download="recovery-codes.txt" t-att-href="codes_uri">Download</a>
+                    <button type="button" class="btn btn-outline-secondary flex-fill" onclick="window.print()">Print</button>
+                </div>
+                <a class="btn btn-primary w-100 mt-3 mfg-noprint" t-att-href="continue_url">I saved them - continue</a>
+            </div>
+        </t>
+    </template>
+
+    <template id="my_page" name="2FA Shield - my 2FA">
+        <t t-call="web.login_layout">
+            <t t-call="twofa_shield.mfg_style"/>
+            <div class="mfg">
+                <h4>My two-factor authentication</h4>
+                <p class="mfg-sub" t-out="user.login"/>
+                <div t-if="message" class="alert alert-success py-2 small" t-out="message"/>
+                <div t-if="error" class="alert alert-danger py-2 small" t-out="error"/>
+                <p class="text-center">
+                    <span t-if="enrolled" class="mfg-badge mfg-ok">Active</span>
+                    <span t-elif="required" class="mfg-badge mfg-warn">Required - not set up</span>
+                    <span t-else="" class="mfg-badge mfg-off">Not set up</span>
+                </p>
+                <t t-if="enrolled">
+                    <p class="small text-muted text-center" t-if="enrolled_on">Enabled on <span t-out="enrolled_on" t-options="{'widget': 'datetime'}"/></p>
+                    <t t-if="recovery_enabled">
+                        <hr/>
+                        <p class="small">Recovery codes left: <strong t-out="codes_left"/></p>
+                        <form method="post" action="/twofa_shield/recovery">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <label class="small text-muted">Enter a current code to generate new recovery codes</label>
+                            <input type="text" name="totp_code" class="form-control mb-2" inputmode="numeric"
+                                   autocomplete="one-time-code" pattern="[0-9 ]*" placeholder="000 000" required="required"/>
+                            <button type="submit" class="btn btn-outline-primary w-100">Generate new recovery codes</button>
+                        </form>
+                    </t>
+                    <p class="small text-muted mt-3 mb-0">Lost your phone? Ask your administrator to reset your two-factor authentication.</p>
+                </t>
+                <t t-else="">
+                    <a href="/twofa_shield/setup" class="btn btn-primary w-100">Set up two-factor authentication</a>
+                </t>
+                <a href="/web" class="btn btn-link w-100 mt-2 text-muted">Back to Odoo</a>
+            </div>
+        </t>
+    </template>
+
+    <!-- Hide the "remember this device" switch on the standard code page (cosmetic; also enforced server side) -->
+    <template id="auth_totp_form_mfa_guard" inherit_id="auth_totp.auth_totp_form" name="2FA Shield: hide remember device">
+        <xpath expr="." position="inside">
+            <t t-if="mfa_guard_hide_remember">
+                <style>
+                    .form-check:has(#switch-remember), .form-switch:has(#switch-remember), #switch-remember { display: none !important; }
+                </style>
+            </t>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mfa_guard_my_action" model="ir.actions.act_url">
+        <field name="name">My 2FA</field>
+        <field name="url">/twofa_shield/my</field>
+        <field name="target">self</field>
+    </record>
+
+    <menuitem id="menu_mfa_guard_root" name="2FA Shield" sequence="95"
+              web_icon="twofa_shield,static/description/icon.png" groups="base.group_user"/>
+    <menuitem id="menu_mfa_guard_my" name="My 2FA" parent="menu_mfa_guard_root"
+              action="mfa_guard_my_action" sequence="1"/>
+    <menuitem id="menu_mfa_guard_overview" name="2FA Overview" parent="menu_mfa_guard_root"
+              action="mfa_guard_users_action" sequence="10" groups="base.group_system"/>
+    <menuitem id="menu_mfa_guard_policies" name="Policies" parent="menu_mfa_guard_root"
+              action="mfa_guard_policy_action" sequence="20" groups="base.group_system"/>
+    <menuitem id="menu_mfa_guard_invite" name="Send Invitations" parent="menu_mfa_guard_root"
+              action="mfa_guard_invite_wizard_action" sequence="30" groups="base.group_system"/>
+    <menuitem id="menu_mfa_guard_log" name="Audit Log" parent="menu_mfa_guard_root"
+              action="mfa_guard_log_action" sequence="40" groups="base.group_system"/>
+    <menuitem id="menu_mfa_guard_settings" name="Settings" parent="menu_mfa_guard_root"
+              action="mfa_guard_settings_action" sequence="90" groups="base.group_system"/>
+</odoo>
