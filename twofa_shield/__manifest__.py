@@ -19,9 +19,9 @@ Professional two-factor authentication enforcement for Odoo.
 * Invitation e-mails to one, many or all users
 * Full audit log
 """,
-    'author': 'Your Company',
-    'website': 'https://www.example.com',
-    'support': 'support@example.com',
+    'author': 'Misterinfo Maroc - Abdechakour Hrouchan',
+    'website': 'https://misterinfo.ma/',
+    'support': 'contact@misterinfo.ma',
     'license': 'OPL-1',
     'price': 42.00,
     'currency': 'USD',
