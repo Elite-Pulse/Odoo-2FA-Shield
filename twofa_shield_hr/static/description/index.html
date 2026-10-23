@@ -1,26 +1,140 @@
-<section class="oe_container">
-  <div class="oe_row oe_spaced">
-    <h2 class="oe_slogan">2FA Shield - HR Departments</h2>
-    <h3 class="oe_slogan">Department-based Two-Factor Authentication Policies</h3>
-    <p class="oe_mt32">
-      Extend 2FA Shield with Human Resources department integration.
-      Define and enforce two-factor authentication policies based on
-      employee departments, alongside the core 2FA Shield module.
-    </p>
-    <ul>
-      <li>Integrates with Odoo Human Resources.</li>
-      <li>Uses the core twofa_shield policy engine.</li>
-      <li>Automatically installs when its dependencies are installed.</li>
-      <li>Provides department-based policy configuration.</li>
-    </ul>
-    <p>
-      Requires the 2FA Shield module and Odoo HR.
-    </p>
-    <p>
-      Support: <a href="mailto:contact@misterinfo.ma">contact@misterinfo.ma</a>
-    </p>
-    <p>
-      Website: <a href="https://misterinfo.ma/">Misterinfo Maroc</a>
-    </p>
-  </div>
+<section class="oe_styling_v8" style="max-width: 980px; margin: 0 auto; padding: 0 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1f2d3d;">
+
+    <div style="text-align:center; padding: 44px 0 20px;">
+        <img src="icon.png" alt="2FA Shield" style="width:72px; height:72px; border-radius:16px;"/>
+        <h1 style="color:#0b2545; font-size:36px; font-weight:800; margin:14px 0 8px;">2FA Shield</h1>
+        <p style="font-size:19px; color:#017e84; font-weight:600; margin:0 0 10px;">Enforce two-factor authentication on every Odoo account &mdash; without locking yourself out.</p>
+        <p style="max-width:720px; margin:0 auto; font-size:15px; line-height:1.6; color:#41546b;">
+            Passwords get stolen. 2FA Shield makes TOTP two-factor authentication <strong>mandatory, manageable and auditable</strong>:
+            you decide who must use it, admins can reset it in one click, and it works after a classic login <em>and</em> after Microsoft Azure / OAuth single sign-on.
+        </p>
+        <p style="margin-top:18px;">
+            <span style="display:inline-block; background:#e3f2f3; color:#017e84; font-weight:700; border-radius:20px; padding:5px 14px; margin:3px;">Odoo 17</span>
+            <span style="display:inline-block; background:#e3f2f3; color:#017e84; font-weight:700; border-radius:20px; padding:5px 14px; margin:3px;">Odoo 18</span>
+            <span style="display:inline-block; background:#e3f2f3; color:#017e84; font-weight:700; border-radius:20px; padding:5px 14px; margin:3px;">Odoo 19</span>
+            <span style="display:inline-block; background:#e3f2f3; color:#017e84; font-weight:700; border-radius:20px; padding:5px 14px; margin:3px;">Community &amp; Enterprise</span>
+        </p>
+    </div>
+
+    <div style="padding: 20px 0;">
+        <img src="banner.png" alt="2FA Shield banner" style="width:100%; border-radius:10px; border:1px solid #e5e9f2;"/>
+    </div>
+
+    <!-- Features -->
+    <div style="padding: 30px 0 10px;">
+        <h2 style="text-align:center; color:#0b2545; font-size:28px; font-weight:800; margin:0 0 26px;">Everything you need to roll out 2FA properly</h2>
+        <div class="row" style="margin:0;">
+            <div class="col-md-4" style="padding:10px;"><div style="background:#f6f8fc; border:1px solid #e5e9f2; border-radius:10px; padding:20px; height:100%;">
+                <div style="font-size:24px; color:#017e84;"><i class="fa fa-toggle-on"></i></div>
+                <h3 style="font-size:16px; font-weight:700; margin:8px 0 6px;">Admin on/off switch</h3>
+                <p style="font-size:14px; line-height:1.5; margin:0;">Enable or disable enforcement from <em>Settings</em> any time. No uninstall, no data loss.</p>
+            </div></div>
+            <div class="col-md-4" style="padding:10px;"><div style="background:#f6f8fc; border:1px solid #e5e9f2; border-radius:10px; padding:20px; height:100%;">
+                <div style="font-size:24px; color:#017e84;"><i class="fa fa-sitemap"></i></div>
+                <h3 style="font-size:16px; font-weight:700; margin:8px 0 6px;">Flexible policies</h3>
+                <p style="font-size:14px; line-height:1.5; margin:0;">Target everybody, internal users, portal users, access groups, companies, specific users &mdash; or HR departments (bridge module included).</p>
+            </div></div>
+            <div class="col-md-4" style="padding:10px;"><div style="background:#f6f8fc; border:1px solid #e5e9f2; border-radius:10px; padding:20px; height:100%;">
+                <div style="font-size:24px; color:#017e84;"><i class="fa fa-user-secret"></i></div>
+                <h3 style="font-size:16px; font-weight:700; margin:8px 0 6px;">Per-user override</h3>
+                <p style="font-size:14px; line-height:1.5; margin:0;">Force 2FA on one account or exempt a break-glass account, whatever the policies say.</p>
+            </div></div>
+            <div class="col-md-4" style="padding:10px;"><div style="background:#f6f8fc; border:1px solid #e5e9f2; border-radius:10px; padding:20px; height:100%;">
+                <div style="font-size:24px; color:#017e84;"><i class="fa fa-windows"></i></div>
+                <h3 style="font-size:16px; font-weight:700; margin:8px 0 6px;">Password and SSO</h3>
+                <p style="font-size:14px; line-height:1.5; margin:0;">Hooks into Odoo's native second-step, so it also runs after Microsoft Azure / Google / any OAuth login. Optionally trust the SSO provider's own MFA.</p>
+            </div></div>
+            <div class="col-md-4" style="padding:10px;"><div style="background:#f6f8fc; border:1px solid #e5e9f2; border-radius:10px; padding:20px; height:100%;">
+                <div style="font-size:24px; color:#017e84;"><i class="fa fa-life-ring"></i></div>
+                <h3 style="font-size:16px; font-weight:700; margin:8px 0 6px;">Reset &amp; recovery wizard</h3>
+                <p style="font-size:14px; line-height:1.5; margin:0;">Lost phone or lost Azure account? Reset 2FA, open an emergency bypass window, exempt the user and send a password-reset e-mail for a local account.</p>
+            </div></div>
+            <div class="col-md-4" style="padding:10px;"><div style="background:#f6f8fc; border:1px solid #e5e9f2; border-radius:10px; padding:20px; height:100%;">
+                <div style="font-size:24px; color:#017e84;"><i class="fa fa-key"></i></div>
+                <h3 style="font-size:16px; font-weight:700; margin:8px 0 6px;">Recovery codes</h3>
+                <p style="font-size:14px; line-height:1.5; margin:0;">10 one-time codes shown at enrolment, stored only as salted hashes. Users can regenerate them from <em>My 2FA</em>.</p>
+            </div></div>
+            <div class="col-md-4" style="padding:10px;"><div style="background:#f6f8fc; border:1px solid #e5e9f2; border-radius:10px; padding:20px; height:100%;">
+                <div style="font-size:24px; color:#017e84;"><i class="fa fa-envelope"></i></div>
+                <h3 style="font-size:16px; font-weight:700; margin:8px 0 6px;">E-mail invitations</h3>
+                <p style="font-size:14px; line-height:1.5; margin:0;">Invite and force 2FA for one user, a selection, everyone still missing, or the whole company in one click &mdash; with a personal message and a deadline.</p>
+            </div></div>
+            <div class="col-md-4" style="padding:10px;"><div style="background:#f6f8fc; border:1px solid #e5e9f2; border-radius:10px; padding:20px; height:100%;">
+                <div style="font-size:24px; color:#017e84;"><i class="fa fa-clock-o"></i></div>
+                <h3 style="font-size:16px; font-weight:700; margin:8px 0 6px;">Grace period &amp; reminders</h3>
+                <p style="font-size:14px; line-height:1.5; margin:0;">Let users postpone for a few days, then block. A daily job reminds anyone who has not enrolled.</p>
+            </div></div>
+            <div class="col-md-4" style="padding:10px;"><div style="background:#f6f8fc; border:1px solid #e5e9f2; border-radius:10px; padding:20px; height:100%;">
+                <div style="font-size:24px; color:#017e84;"><i class="fa fa-list-alt"></i></div>
+                <h3 style="font-size:16px; font-weight:700; margin:8px 0 6px;">Audit log</h3>
+                <p style="font-size:14px; line-height:1.5; margin:0;">Who enabled, reset, bypassed or exempted what, when and from which IP. Retention is configurable.</p>
+            </div></div>
+        </div>
+    </div>
+
+    <!-- Screenshots -->
+    <div style="padding: 30px 0 10px;">
+        <h2 style="text-align:center; color:#0b2545; font-size:28px; font-weight:800; margin:0 0 26px;">See it in action</h2>
+
+        <h3 style="color:#0b2545; font-size:18px; margin:24px 0 8px;">1. Switch it on from Settings</h3>
+        <img src="screenshot_1_settings.png" alt="Settings" style="width:100%; border:1px solid #e5e9f2; border-radius:8px;"/>
+
+        <h3 style="color:#0b2545; font-size:18px; margin:30px 0 8px;">2. Responsive enrolment page &mdash; QR code, manual key, grace period</h3>
+        <img src="screenshot_2_enrolment.png" alt="Enrolment" style="width:100%; border:1px solid #e5e9f2; border-radius:8px;"/>
+
+        <h3 style="color:#0b2545; font-size:18px; margin:30px 0 8px;">3. Decide who must use 2FA</h3>
+        <img src="screenshot_3_policies.png" alt="Policies" style="width:100%; border:1px solid #e5e9f2; border-radius:8px;"/>
+
+        <h3 style="color:#0b2545; font-size:18px; margin:30px 0 8px;">4. Follow adoption at a glance</h3>
+        <img src="screenshot_4_overview.png" alt="Overview" style="width:100%; border:1px solid #e5e9f2; border-radius:8px;"/>
+
+        <h3 style="color:#0b2545; font-size:18px; margin:30px 0 8px;">5. Lost phone? Recover in one click</h3>
+        <img src="screenshot_5_recovery.png" alt="Recovery" style="width:100%; border:1px solid #e5e9f2; border-radius:8px;"/>
+
+        <h3 style="color:#0b2545; font-size:18px; margin:30px 0 8px;">6. Invite and force 2FA by e-mail</h3>
+        <img src="screenshot_6_invite.png" alt="Invitation" style="width:100%; border:1px solid #e5e9f2; border-radius:8px;"/>
+    </div>
+
+    <!-- How it works -->
+    <div style="padding: 36px 0 10px;">
+        <h2 style="text-align:center; color:#0b2545; font-size:28px; font-weight:800; margin:0 0 20px;">How it works</h2>
+        <table style="width:100%; border-collapse:collapse; font-size:14px;">
+            <tr style="background:#0b2545; color:#fff;"><th style="padding:10px; text-align:left;">Situation</th><th style="padding:10px; text-align:left;">What the user sees</th></tr>
+            <tr><td style="padding:10px; border-bottom:1px solid #e5e9f2;">2FA required, not enrolled</td><td style="padding:10px; border-bottom:1px solid #e5e9f2;">QR code page after password / SSO. Secret is saved only after a valid code.</td></tr>
+            <tr style="background:#f6f8fc;"><td style="padding:10px; border-bottom:1px solid #e5e9f2;">Already enrolled</td><td style="padding:10px; border-bottom:1px solid #e5e9f2;">Code page. <strong>The setup page is refused</strong>: nobody can attach a new device without an admin reset.</td></tr>
+            <tr><td style="padding:10px; border-bottom:1px solid #e5e9f2;">Lost phone</td><td style="padding:10px; border-bottom:1px solid #e5e9f2;">Use a recovery code, or ask the admin to reset (and enrol again).</td></tr>
+            <tr style="background:#f6f8fc;"><td style="padding:10px; border-bottom:1px solid #e5e9f2;">Lost SSO account</td><td style="padding:10px; border-bottom:1px solid #e5e9f2;">Admin exempts the account and sends a password-reset link: a local account works at once.</td></tr>
+            <tr><td style="padding:10px; border-bottom:1px solid #e5e9f2;">Grace period active</td><td style="padding:10px; border-bottom:1px solid #e5e9f2;">&laquo;Remind me later&raquo; button until the deadline, then enrolment is compulsory.</td></tr>
+        </table>
+    </div>
+
+    <!-- Security -->
+    <div style="padding: 36px 0 10px;">
+        <h2 style="text-align:center; color:#0b2545; font-size:28px; font-weight:800; margin:0 0 20px;">Built with security in mind</h2>
+        <ul style="font-size:15px; line-height:1.9; max-width:760px; margin:0 auto;">
+            <li>Standard RFC 6238 TOTP (SHA-1, 6 digits, 30 s) &mdash; works with Microsoft Authenticator, Google Authenticator, Authy, 1Password, Bitwarden&hellip;</li>
+            <li>Uses Odoo's own brute-force protection (login cooldown) on every code check.</li>
+            <li>Setup secret lives server-side in the session, never in a form field.</li>
+            <li>Users cannot disable a mandatory 2FA from their preferences.</li>
+            <li>Only administrators can read or change overrides, bypass windows and policies.</li>
+            <li>&laquo;Remember this device&raquo; can be disabled (server-side, not just hidden).</li>
+            <li>Open-redirect-safe, CSRF-protected, no data sent to third parties.</li>
+        </ul>
+    </div>
+
+    <!-- FAQ -->
+    <div style="padding: 36px 0 10px;">
+        <h2 style="text-align:center; color:#0b2545; font-size:28px; font-weight:800; margin:0 0 20px;">FAQ</h2>
+        <p style="font-size:15px;"><strong>Can I turn it off without uninstalling?</strong><br/>Yes: Settings &rsaquo; 2FA Shield &rsaquo; 2FA enforcement &rsaquo; Disabled.</p>
+        <p style="font-size:15px;"><strong>We already use Azure MFA. Do I need this?</strong><br/>You choose: require both, or tick &laquo;Trust single sign-on&raquo; so Azure users skip the Odoo code while password users are still covered.</p>
+        <p style="font-size:15px;"><strong>Does it work for API / RPC?</strong><br/>It relies on Odoo's standard behaviour: accounts with 2FA enabled must use API keys for RPC.</p>
+        <p style="font-size:15px;"><strong>Does it need a paid service?</strong><br/>No. Everything runs inside your Odoo, no external service, no tracking.</p>
+        <p style="font-size:15px;"><strong>Which versions?</strong><br/>One package per branch for Odoo 17.0, 18.0 and 19.0.</p>
+    </div>
+
+    <div style="padding: 36px 0 60px; border-top: 1px solid #e5e9f2; margin-top:30px; text-align:center;">
+        <h3 style="color:#0b2545; font-size:22px; font-weight:800; margin:0 0 8px;">Need help?</h3>
+        <p style="font-size:15px; margin:0 0 16px;">Questions, customisation or support &mdash; we answer the same business day.</p>
+        <a href="mailto:support@example.com?subject=MFA%20Guard" style="display:inline-block; background:#017e84; color:#ffffff; text-decoration:none; padding:11px 26px; border-radius:6px; font-weight:700; font-size:15px;"><i class="fa fa-envelope" style="margin-right:8px;"></i>support@example.com</a>
+    </div>
 </section>
