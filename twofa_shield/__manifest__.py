@@ -1,4 +1,4 @@
-{
+﻿{
     'name': '2FA Shield - Force Two-Factor Authentication for All Users',
     'version': '18.0.1.0.0',
     'category': 'Tools',
