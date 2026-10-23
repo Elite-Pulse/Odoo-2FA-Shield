@@ -46,3 +46,4 @@ Professional two-factor authentication enforcement for Odoo.
     'installable': True,
     'auto_install': False,
 }
+
